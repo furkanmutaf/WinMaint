@@ -1,31 +1,22 @@
-# WinMaint 
+WinMaint 
+Windows'ta zamanla biriken temp dosyaları, DNS artıkları ve DISM şişkinlikleriyle uğraşmaktan sıkılıp yazdığım modüler bir bakım ve temizlik betiği.
 
-![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B%20%7C%207%2B-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Platform](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-lightgrey)
+Sistemdeki kritik dosyaları ve yakın tarihte açılmış geçici verileri (varsayılan 7 gün) patlatmadan, güvenli bir şekilde alan açmayı hedefliyor.
 
-Windows'ta zamanla biriken temp dosyaları, DNS artıkları ve DISM şişkinlikleriyle uğraşmaktan sıkılıp yazdığım modüler bir bakım ve temizlik betiği. 
+ Neden Yapıldı?
+Windows'un kendi disk temizleme aracı veya piyasadaki 3. parti temizleyiciler ya neyi sildiğini tam söylemiyor ya da sistemi bozacak kadar agresif çalışabiliyor. WinMaint ile:
 
-Sistemdeki kritik dosyaları ve yakın tarihte açılmış geçici verileri (varsayılan 7 gün) **patlatmadan**, güvenli bir şekilde alan açmayı hedefliyor.
+Nelerin silineceğini esnek bir JSON konfigürasyonundan yönetebiliyorsunuz.
 
----
+Sadece belirlenen günden eski dosyalar siliniyor (SafeAgeDays).
 
-##  Neden Yapıldı?
+Tek bir parametreyle önce simülasyon çalıştırıp ne kadar yer açılacağını görebiliyorsunuz.
 
-Windows'un kendi disk temizleme aracı veya piyasadaki 3. parti temizleyiciler ya neyi sildiğini tam söylemiyor ya da sistemi bozacak kadar agresif çalışabiliyor. **WinMaint** ile:
-- Nelerin silineceğini esnek bir JSON konfigürasyonundan yönetebiliyorsunuz.
-- Sadece belirlenen günden eski dosyalar siliniyor (`SafeAgeDays`).
-- Tek bir parametreyle önce simülasyon çalıştırıp ne kadar yer açılacağını görebiliyorsunuz.
-
----
-
-##  Hızlı Başlangıç
-
-### PowerShell Üzerinden
-
-```powershell
+ Hızlı Başlangıç
+PowerShell Üzerinden
+PowerShell
 # Repoyu klonlayın
-git clone https://github.com/furkanmutaf/WinMaint.git
+git clone [https://github.com/furkanmutaf/WinMaint.git](https://github.com/furkanmutaf/WinMaint.git)
 cd WinMaint
 
 # Betik çalıştırma izni hatası alırsanız (İsteğe bağlı):
@@ -41,7 +32,7 @@ DOS
 powershell -ExecutionPolicy Bypass -File ".\src\WinMaint.ps1" -Language tr-TR
 Not: DISM bileşen deposu temizliği biraz zaman alabilir. İstemiyorsanız -SkipDism parametresini ekleyebilirsiniz.
 
-⚙️ Kendinize Göre Özelleştirin
+ Kendinize Göre Özelleştirin
 Temizlenecek yolları ve "kaç günlük dosyalar güvenli" kuralını src/Data/config.json dosyasından kolayca değiştirebilirsiniz:
 
 JSON
