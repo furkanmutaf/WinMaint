@@ -1,0 +1,13 @@
+# PowerShell / VSCode
+.vscode/
+*.log
+*.tmp
+*.bak
+
+# Testing & Coverage
+PesterResults.xml
+coverage.xml
+
+# OS generated files
+.DS_Store
+Thumbs.db

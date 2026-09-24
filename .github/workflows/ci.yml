@@ -1,0 +1,23 @@
+name: CI Build & Test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  pester-test:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Pester Tests
+        shell: powershell
+        run: |
+          Install-Module -Name Pester -Force -SkipPublisherCheck -Scope CurrentUser
+           = Invoke-Pester -Path .\tests\WinMaint.Tests.ps1 -PassThru
+          if ($result.FailedCount -gt 0) {
+              exit 1
+          }

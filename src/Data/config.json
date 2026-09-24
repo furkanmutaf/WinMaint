@@ -1,0 +1,34 @@
+{
+  "Version": "1.0.0",
+  "SafetyLevel": "High",
+  "TargetDirectories": [
+    {
+      "Id": "UserTemp",
+      "Path": "%TEMP%",
+      "SafeAgeDays": 1,
+      "Description": "Kullanıcı geçici dosyaları"
+    },
+    {
+      "Id": "SystemTemp",
+      "Path": "%SYSTEMROOT%\\Temp",
+      "SafeAgeDays": 1,
+      "Description": "Windows sistem geçici dosyaları"
+    },
+    {
+      "Id": "Prefetch",
+      "Path": "%SYSTEMROOT%\\Prefetch",
+      "SafeAgeDays": 7,
+      "Description": "Windows uygulama önbelleği"
+    },
+    {
+      "Id": "SoftwareDistributionDownload",
+      "Path": "%SYSTEMROOT%\\SoftwareDistribution\\Download",
+      "SafeAgeDays": 0,
+      "Description": "İndirilen Windows Update güncelleme kalıntıları"
+    }
+  ],
+  "SystemServices": {
+    "DismCleanup": true,
+    "FlushDns": true
+  }
+}

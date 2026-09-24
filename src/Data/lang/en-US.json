@@ -1,0 +1,10 @@
+{
+  "ERR_ADMIN_REQUIRED": "Administrator privileges required. Please run PowerShell as Administrator.",
+  "INFO_STARTING": "Starting WinMaint Maintenance & Cleanup Process...",
+  "INFO_DRYRUN": "[DRY-RUN MODE] No files will be deleted, calculating potential space...",
+  "INFO_CLEANING_PATH": "Cleaning directory: {0}",
+  "INFO_FREED_SPACE": "Total Space Recovered: {0} MB",
+  "WARN_LOCKED_FILE": "File in use or locked, safely skipped: {0}",
+  "INFO_DISM_START": "Starting Windows Component Store (WinSxS / DISM) cleanup...",
+  "INFO_DNS_FLUSH": "DNS Resolver Cache successfully flushed."
+}
