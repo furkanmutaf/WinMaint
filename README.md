@@ -52,7 +52,6 @@ powershell -ExecutionPolicy Bypass -File ".\src\WinMaint.ps1" -Language tr-TR
 
 Temizlenecek yolları ve "kaç günlük dosyalar güvenli" kuralını `src/Data/config.json` dosyasından kolayca değiştirebilirsiniz:
 
-\`\`\`json
 {
   "TargetDirectories": [
     {
@@ -69,7 +68,6 @@ Temizlenecek yolları ve "kaç günlük dosyalar güvenli" kuralını `src/Data/
     "DismCleanup": true
   }
 }
-\`\`\`
 
 ---
 
