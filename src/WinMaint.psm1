@@ -33,7 +33,9 @@ function Get-WinMaintLanguageMap {
         $langPath = Join-Path -Path $scriptDir -ChildPath "Data\lang\en-US.json"
     }
  
-    return (Get-Content -Path $langPath -Raw | ConvertFrom-Json | Convert-PSObjectToHashtable)
+    # -Encoding UTF8 acikca belirtilmezse Windows PowerShell 5.1, BOM'suz JSON
+    # dosyalarini sistem kod sayfasiyla okuyup Turkce karakterleri bozabilir.
+    return (Get-Content -Path $langPath -Raw -Encoding UTF8 | ConvertFrom-Json | Convert-PSObjectToHashtable)
 }
  
 function Invoke-WinMaintCleanup {
