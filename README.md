@@ -75,9 +75,7 @@ Temizlenecek yolları ve "kaç günlük dosyalar güvenli" kuralını `src/Data/
 
 Projeyi kendi ortamınızda geliştirecekseniz Pester testlerini koşturabilirsiniz:
 
-\`\`\`powershell
 Invoke-Pester -Path .\tests\WinMaint.Tests.ps1
-\`\`\`
 
 ---
 
