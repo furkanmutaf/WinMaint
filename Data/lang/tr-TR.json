@@ -1,0 +1,10 @@
+﻿{
+  "ERR_ADMIN_REQUIRED": "Bu işlem için Yönetici (Administrator) yetkisi gerekiyor. Lütfen PowerShell'i yönetici olarak çalıştırın.",
+  "INFO_STARTING": "WinMaint Bakım ve Temizlik İşlemi Başlatılıyor...",
+  "INFO_DRYRUN": "[SIMÜLASYON MODU] Hiçbir dosya silinmeyecek, sadece hesaplanıyor...",
+  "INFO_CLEANING_PATH": "Temizleniyor: {0}",
+  "INFO_FREED_SPACE": "Toplam Temizlenen Alan: {0} MB",
+  "WARN_LOCKED_FILE": "Dosya kullanımda veya kilitli, güvenle atlandı: {0}",
+  "INFO_DISM_START": "Windows Bileşen Deposu (WinSxS / DISM) temizliği başlatılıyor...",
+  "INFO_DNS_FLUSH": "DNS Çözümleyici Önbelleği temizlendi."
+}
