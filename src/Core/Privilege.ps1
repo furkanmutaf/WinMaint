@@ -1,4 +1,4 @@
-function Test-IsAdministrator {
+﻿function Test-IsAdministrator {
     [CmdletBinding()]
     param()
 

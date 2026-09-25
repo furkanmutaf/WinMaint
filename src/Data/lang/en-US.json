@@ -1,4 +1,4 @@
-{
+﻿{
   "ERR_ADMIN_REQUIRED": "Administrator privileges required. Please run PowerShell as Administrator.",
   "INFO_STARTING": "Starting WinMaint Maintenance & Cleanup Process...",
   "INFO_DRYRUN": "[DRY-RUN MODE] No files will be deleted, calculating potential space...",

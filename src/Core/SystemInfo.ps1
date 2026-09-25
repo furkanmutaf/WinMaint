@@ -1,4 +1,4 @@
-function Get-WinMaintSystemInfo {
+﻿function Get-WinMaintSystemInfo {
     [CmdletBinding()]
     param()
 

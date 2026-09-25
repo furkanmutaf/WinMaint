@@ -1,8 +1,26 @@
-$scriptDir =$PSScriptRoot
+﻿$scriptDir = $PSScriptRoot
 
 . (Join-Path -Path $scriptDir -ChildPath "Core\Privilege.ps1")
 . (Join-Path -Path $scriptDir -ChildPath "Core\SystemInfo.ps1")
 . (Join-Path -Path $scriptDir -ChildPath "Core\SafeDelete.ps1")
+
+function Convert-PSObjectToHashtable {
+    # ConvertFrom-Json -AsHashtable yalnizca PowerShell 6.0+ surumlerinde mevcuttur.
+    # Windows PowerShell 5.1 uyumlulugu icin PSCustomObject -> Hashtable donusumu elle yapilir.
+    [CmdletBinding()]
+    param(
+        [Parameter(ValueFromPipeline = $true)]
+        [PSObject]$InputObject
+    )
+
+    process {
+        $hash = @{}
+        foreach ($property in $InputObject.PSObject.Properties) {
+            $hash[$property.Name] = $property.Value
+        }
+        return $hash
+    }
+}
 
 function Get-WinMaintLanguageMap {
     [CmdletBinding()]
@@ -15,7 +33,9 @@ function Get-WinMaintLanguageMap {
         $langPath = Join-Path -Path $scriptDir -ChildPath "Data\lang\en-US.json"
     }
 
-    return (Get-Content -Path $langPath -Raw | ConvertFrom-Json -AsHashtable)
+    # -Encoding UTF8 acikca belirtilmezse Windows PowerShell 5.1, BOM'suz JSON
+    # dosyalarini sistem kod sayfasiyla okuyup Turkce karakterleri bozabilir.
+    return (Get-Content -Path $langPath -Raw -Encoding UTF8 | ConvertFrom-Json | Convert-PSObjectToHashtable)
 }
 
 function Invoke-WinMaintCleanup {
@@ -34,7 +54,9 @@ function Invoke-WinMaintCleanup {
         return
     }
 
-    $config = Get-Content -Path $configPath -Raw | ConvertFrom-Json
+    # NOT: config.json icindeki "Description" alanlari Turkce karakter icerdigi icin
+    # burada da -Encoding UTF8 acikca belirtiliyor (onceki versiyonda eksikti).
+    $config = Get-Content -Path $configPath -Raw -Encoding UTF8 | ConvertFrom-Json
 
     if (-not (Assert-AdministratorPrivilege -LanguageMap $lang)) {
         return
@@ -50,8 +72,7 @@ function Invoke-WinMaintCleanup {
 
     $totalFreedMb = 0
 
-    $config.TargetDirectories | ForEach-Object {
-        $target =$_
+    foreach ($target in $config.TargetDirectories) {
         $expandedPath = Expand-WinMaintPath -Path $target.Path
         Write-Host ($lang["INFO_CLEANING_PATH"] -f $expandedPath) -ForegroundColor DarkGray
 
@@ -64,14 +85,24 @@ function Invoke-WinMaintCleanup {
 
     if (-not $DryRun) {
         if ($config.SystemServices.FlushDns) {
-            Clear-DnsClientCache -ErrorAction SilentlyContinue
-            Write-Host "✔ $($lang['INFO_DNS_FLUSH'])" -ForegroundColor Green
+            if (Get-Command -Name Clear-DnsClientCache -ErrorAction SilentlyContinue) {
+                Clear-DnsClientCache -ErrorAction SilentlyContinue
+            }
+            else {
+                # DnsClient modulu bulunmayan sistemler (ornegin Server Core) icin yedek yontem.
+                & ipconfig.exe /flushdns | Out-Null
+            }
+            Write-Host "OK $($lang['INFO_DNS_FLUSH'])" -ForegroundColor Green
         }
 
         if ($config.SystemServices.DismCleanup -and -not $SkipDism) {
             Write-Host "`n$($lang['INFO_DISM_START'])" -ForegroundColor Cyan
             try {
-                Start-Process -FilePath "dism.exe" -ArgumentList "/Online /Cleanup-Image /StartComponentCleanup /ResetBase" -NoNewWindow -Wait
+                $dismArgs = "/Online /Cleanup-Image /StartComponentCleanup /ResetBase"
+                $process = Start-Process -FilePath "dism.exe" -ArgumentList $dismArgs -NoNewWindow -Wait -PassThru
+                if ($process.ExitCode -ne 0) {
+                    Write-Warning "DISM exited with code $($process.ExitCode)."
+                }
             }
             catch {
                 Write-Verbose "DISM cleanup skipped or failed silently."
@@ -85,4 +116,3 @@ function Invoke-WinMaintCleanup {
 }
 
 Export-ModuleMember -Function Invoke-WinMaintCleanup
-

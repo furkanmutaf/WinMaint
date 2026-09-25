@@ -1,4 +1,4 @@
-function Remove-SafeItem {
+﻿function Remove-SafeItem {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

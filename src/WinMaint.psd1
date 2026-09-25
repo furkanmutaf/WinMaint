@@ -1,9 +1,10 @@
-#
+﻿#
 # 'WinMaint' modülü için modül bildirimi
 #
 # Oluşturan: Adem Furkan Mutaf
 #
 # 23.09.2026 tarihinde oluşturuldu
+# 25.09.2026 tarihinde encoding duzeltmeleriyle guncellendi (v1.0.1)
 #
 
 @{
@@ -12,7 +13,7 @@
 RootModule = 'WinMaint.psm1'
 
 # Bu modülün sürüm numarası.
-ModuleVersion = '1.0.0'
+ModuleVersion = '1.0.1'
 
 # Desteklenen PSEdition'lar
 # CompatiblePSEditions = @()
@@ -69,7 +70,7 @@ PowerShellVersion = '5.1'
 # NestedModules = @()
 
 # Bu modülden dışarı aktarılacak işlevler için en iyi performansı elde etmek amacıyla joker karakterler kullanmayın ve girdiyi silmeyin. Dışarı aktarılacak işlev yoksa boş bir dizi kullanın.
-FunctionsToExport = 'Invoke-WinMaintCleanup'
+FunctionsToExport = @('Invoke-WinMaintCleanup')
 
 # Bu modülden dışarı aktarılacak cmdlet'ler için en iyi performansı elde etmek amacıyla joker karakterler kullanmayın ve girdiyi silmeyin. Dışarı aktarılacak cmdlet yoksa boş bir dizi kullanın.
 CmdletsToExport = @()
@@ -87,7 +88,15 @@ AliasesToExport = @()
 # ModuleList = @()
 
 # Bu modülle paketlenmiş tüm dosyaların listesi
-# FileList = @()
+FileList = @(
+    'WinMaint.psm1',
+    'Core\Privilege.ps1',
+    'Core\SafeDelete.ps1',
+    'Core\SystemInfo.ps1',
+    'Data\config.json',
+    'Data\lang\tr-TR.json',
+    'Data\lang\en-US.json'
+)
 
 # RootModule/ModuleToProcess içinde belirtilen modüle geçirilecek özel veriler. Bu, PowerShell tarafından kullanılan ek modül meta verilerine sahip bir PSData karma tablosu da içerebilir.
 PrivateData = @{
@@ -107,7 +116,7 @@ PrivateData = @{
         # IconUri = ''
 
         # Bu modülün sürüm notları
-        # ReleaseNotes = ''
+        ReleaseNotes = 'v1.0.1: Turkce karakter/encoding sorunlari icin duzeltmeler (config.json -Encoding UTF8, kaynak dosyalar UTF8 BOM).'
 
         # Bu modülün ön sürüm dizesi
         # Prerelease = ''
@@ -129,4 +138,3 @@ PrivateData = @{
 # DefaultCommandPrefix = ''
 
 }
-
